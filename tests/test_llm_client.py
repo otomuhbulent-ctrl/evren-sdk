@@ -167,7 +167,7 @@ def test_stream_interrupted():
     got = []
     with pytest.raises(LLMServiceError) as ei:
         for t in _client(lambda r: httpx.Response(200, content=body, headers=RID)).chat_stream("m", []):
-            got.append(t)
+            got.append(t)  # noqa: PERF402 - akış kesilmeden önce gelen parçalar korunmalı
     assert got == ["yarım"]
     assert ei.value.code == "stream_interrupted" and ei.value.request_id == "req-1"
 

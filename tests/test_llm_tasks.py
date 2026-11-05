@@ -11,6 +11,7 @@ from evren_sdk import (
     AsyncEvrenLLMClient,
     EvrenLLMClient,
     LLMRateLimitError,
+    LLMServiceError,
     LLMValidationError,
     encode_image,
 )
@@ -132,7 +133,7 @@ def test_transcribe_not_retried_after_send():
         calls.append(1)
         return httpx.Response(503, json={"error": {"message": "dolu"}})
 
-    with pytest.raises(Exception):
+    with pytest.raises(LLMServiceError):
         _client(h).transcribe("asr", b"RIFF", response_format="json")
     assert len(calls) == 1
 

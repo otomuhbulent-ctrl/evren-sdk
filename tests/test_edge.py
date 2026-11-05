@@ -7,7 +7,7 @@ from evren_sdk.ws_client import InferenceWSClient
 cv2 = pytest.importorskip("cv2")
 np = pytest.importorskip("numpy")
 
-from evren_sdk.edge import EvrenCamera  # noqa: E402
+from evren_sdk.edge import EvrenCamera
 
 VID = "019f15ec-4e75-7741-bb6c-80b332520cec"
 

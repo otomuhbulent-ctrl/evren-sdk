@@ -30,3 +30,21 @@ jobs:
 
       # -rs: atlanan testler gerekçesiyle özette görünsün
       - run: pytest -q -rs
+
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # pyproject'te `select` tanımlı olmadığından etkin kurallar ruff sürümüne bağlı;
+      # sürüm sabitlenmezse yeni bir ruff sürümü CI'ı kendiliğinden kırabilir
+      - run: pip install -e ".[dev,edge]" "ruff==0.17.3"
+
+      - run: ruff check .
+
+      - run: mypy evren_sdk
